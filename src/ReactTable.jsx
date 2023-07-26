@@ -17,44 +17,64 @@ import {
 const list = [
   {
     id: '1',
-    name: 'VSCode',
-    price: "price",
-    percentage_markup: "percentage_markup",
-    total_price: "total_price",
+    name: 'Actor',
+    price: '1000',
+    percentage_markup: '15.00',
+    total_price: '1150.00',
   },
   {
     id: '2',
-    name: 'VSCode',
-    price: "price",
-    percentage_markup: "percentage_markup",
-    total_price: "total_price",
+    name: 'Video',
+    price: '1000',
+    percentage_markup: '15.00',
+    total_price: '1150.00',
   },
   {
     id: '3',
-    name: 'VSCode',
-    price: "price",
-    percentage_markup: "percentage_markup",
-    total_price: "total_price",
+    name: 'Director',
+    price: '1000',
+    percentage_markup: '15.00',
+    total_price: '1150.00',
   }
 ];
 
-//to create a custom theme
-//update the return!
+
+const calculateTotalPrice = (price, percentageMarkup) => {
+  const priceBN = new BigNumber(price);
+  const markupBN = new BigNumber(percentageMarkup).dividedBy(100);
+
+  const totalPriceBN = priceBN.plus(priceBN.multipliedBy(markupBN));
+
+  return totalPriceBN.toFixed(2);//ist das bignumber??
+};
+
+const sumOfAll = (list) => {
+  let totalSum = new BigNumber(0);
+
+  list.forEach((expense) => {
+    if (expense.total_price) {
+      const expenseTotalPrice = new BigNumber(expense.total_price);
+      totalSum = totalSum.plus(expenseTotalPrice);//ist das bignumber?
+    }
+  });
+
+  return totalSum.toFixed(2); 
+};
+
 
 const ReactTable = () => {
 
-  //const data = { nodes: list };
   const [data, setData] = React.useState({ nodes : list });
   const [value, setValue] = React.useState("");
-
+  const [totalSum, setTotalSum] = React.useState("0.00");
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
-
+  
   const handleSubmit = (event) => {
     const id = Math.floor(Math.random() * (9990 - 0 + 1)) + 0;
-
+    
     setData((state) => ({
       ...state,
       nodes: state.nodes.concat({
@@ -66,11 +86,13 @@ const ReactTable = () => {
         nodes: null,
       }),
     }));
-
+    
+    setValue("");
+    
     event.preventDefault();
   };
   //to add
-
+  
   const handleRemove = (id) => {
     setData((state) => ({
       ...state,
@@ -91,12 +113,25 @@ const ReactTable = () => {
       }),
     }));
   };*/
-
+  
   const handleUpdate = (value, id, property) => {
     setData((state) => ({
       ...state,
       nodes: state.nodes.map((node) => {
         if (node.id === id) {
+          if (property === "price" || property === "percentage_markup") {
+            const totalPrice = calculateTotalPrice(
+              property === "price" ? value : node.price,
+              property === "percentage_markup" ? value : node.percentage_markup
+            );
+            
+            return {
+              ...node,
+              [property]: value,
+              total_price: totalPrice,
+            };
+          }
+          
           return { ...node, [property]: value };
         } else {
           return node;
@@ -105,6 +140,12 @@ const ReactTable = () => {
     }));
   };
   //to update
+
+  React.useEffect(() => {
+    const newTotalSum = sumOfAll(data.nodes);
+    setTotalSum(newTotalSum);
+  }, [data.nodes]);
+  // Calculates the total sum whenever the list data changes
   
   //const theme = useTheme(THEME);
   const theme = useTheme(getTheme());
@@ -113,7 +154,7 @@ const ReactTable = () => {
     <>
     <form onSubmit={handleSubmit}>
       <input type="text" value={value} onChange={handleChange} />
-      <button type="submit">Create</button>
+      <button type="submit">Add new expense</button>
     </form>
     <Table data={data} theme={theme}>
       {(tableList) => (
@@ -124,8 +165,7 @@ const ReactTable = () => {
             <HeaderCell>Price</HeaderCell>
             <HeaderCell>Markup</HeaderCell>
             <HeaderCell>Total</HeaderCell>
-            <HeaderCell>Delete</HeaderCell>
-
+            <HeaderCell>Action</HeaderCell>
           </HeaderRow>
         </Header>
 
@@ -165,24 +205,16 @@ const ReactTable = () => {
                   />
                 </Cell>
                 {/* <Cell>{item.percentage_markup}</Cell> */}
-                <Cell>
-                  <input
-                    style={{ width: "100%" }}
-                    type="text"
-                    value={item.total_price}
-                    onChange={(event) =>
-                      handleUpdate(event.target.value, item.id, "total_price")
-                    }
-                  />
-                </Cell>
-                {/* <Cell>{item.total_price}</Cell> */}
+                <Cell>{item.total_price}</Cell>
                 <Cell>
                   <button type="button" onClick={() => handleRemove(item.id)}>
-                    Remove
+                    Delete
                   </button>
                 </Cell>
               </Row>
             ))}
+            <div>Total: {totalSum}</div>
+            {/* add style to it */}
           </Body>
         </>
       )}
