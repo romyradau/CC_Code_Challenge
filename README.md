@@ -129,13 +129,17 @@
         -well structured README
 
     6.8. Currency and percentage signs fail
-        - tried 7 different approaches with chatGPT
+        - tried 5 different approaches with chatGPT
         - introducing a formatValue function
         - updating handlerfunctions and display values
         - I checked the bigNumber library again to see if they had something like a formatter
         - I even imported a formatter library but nothing really worked
+            https://formatjs.io/docs/polyfills/intl-numberformat/
         - I had currency and percentage signs everywhere but the functionality was gone
         - updating and converting all values to either strings or floats didn't help
+
+        YOU CAN FIND A FILE THAT DISPLAYS € AND % BUT WITH BUGGY FUNCTIONALITY UNDER Currency.jsx
+        SO YOU KNOW WHAT I DID
 
     6.7. So I took a break and fully focused on a detailed README documentation
 

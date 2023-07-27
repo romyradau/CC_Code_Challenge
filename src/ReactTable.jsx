@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./ReactTable.css"
 import { useTheme } from '@table-library/react-table-library/theme';
 import { getTheme } from '@table-library/react-table-library/baseline';
 import BigNumber from "bignumber.js";
@@ -152,7 +153,7 @@ const ReactTable = () => {
   return (
     <>
     {/* form to submit new input */}
-    <form onSubmit={handleSubmit}>
+    <form className="addexpense" onSubmit={handleSubmit}>
       <input type="text" value={value} onChange={handleInput} />
       <button type="submit">Add new expense</button>
     </form>
@@ -207,18 +208,18 @@ const ReactTable = () => {
                 {/* <Cell>{item.percentage_markup}</Cell> */}
                 <Cell>{item.total_price}</Cell>
                 <Cell>
-                  <button type="button" onClick={() => handleRemove(item.id)}>
+                  <button className="deletebutton" type="button" onClick={() => handleRemove(item.id)}>
                     Delete
                   </button>
                 </Cell>
               </Row>
             ))}
-            <div>Total: {totalSum}</div>
             {/* add style to it */}
           </Body>
         </>
       )}
     </Table>
+      <div className="totalsum">Total: {totalSum}</div>
     </>
   );
 };
