@@ -1,4 +1,5 @@
   1. How to run the project **locally**?
+  
         npm install
         <!-- npm install --save-dev snowpack
         npm install react react-dom 
@@ -9,6 +10,7 @@
         npm start
 
   2. What is the overall **structure** of your code?
+
         I did a seperarate ReactTable component.
             It is structured in:
                 -imports
@@ -32,6 +34,7 @@
 
 
   4. What could be a reason for using bignumber.js for calculations?
+
      Because it's a powerful library for handling precise arithmetic operations with large numbers and decimal precision.
      It's handy, because it lets me 
      Currency and Percentage Calculations: When working with financial applications that involve currency and percentage calculations, bignumber.js can accurately handle these scenarios without losing precision.
