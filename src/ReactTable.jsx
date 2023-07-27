@@ -14,6 +14,17 @@ import {
  } from '@table-library/react-table-library/table';
 
 
+/*const formatValue = (value, type) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: type === 'currency' ? 'currency' : 'percent',
+    currency: 'EUR', // Use the appropriate currency code if not EUR
+    minimumFractionDigits: 2,
+  });
+
+  return formatter.format(value);
+};*/
+
+
 const list = [
   {
     id: '1',
@@ -45,7 +56,7 @@ const calculateTotalPrice = (price, percentageMarkup) => {
 
   const totalPriceBN = priceBN.plus(priceBN.multipliedBy(markupBN));
 
-  return totalPriceBN.toFixed(2);//ist das bignumber??
+  return totalPriceBN.toFixed(2);
 };
 
 const sumOfAll = (list) => {
@@ -54,7 +65,7 @@ const sumOfAll = (list) => {
   list.forEach((expense) => {
     if (expense.total_price) {
       const expenseTotalPrice = new BigNumber(expense.total_price);
-      totalSum = totalSum.plus(expenseTotalPrice);//ist das bignumber?
+      totalSum = totalSum.plus(expenseTotalPrice);
     }
   });
 
@@ -68,7 +79,7 @@ const ReactTable = () => {
   const [value, setValue] = React.useState("");
   const [totalSum, setTotalSum] = React.useState("0.00");
 
-  const handleChange = (event) => {
+  const handleInput = (event) => {
     setValue(event.target.value);
   };
   
@@ -101,18 +112,6 @@ const ReactTable = () => {
   };
   //to remove
 
- /* const handleUpdate = (value, id) => {
-    setData((state) => ({
-      ...state,
-      nodes: state.nodes.map((node) => {
-        if (node.id === id) {
-          return { ...node, name: value };
-        } else {
-          return node;
-        }
-      }),
-    }));
-  };*/
   
   const handleUpdate = (value, id, property) => {
     setData((state) => ({
@@ -152,8 +151,9 @@ const ReactTable = () => {
 
   return (
     <>
+    {/* form to submit new input */}
     <form onSubmit={handleSubmit}>
-      <input type="text" value={value} onChange={handleChange} />
+      <input type="text" value={value} onChange={handleInput} />
       <button type="submit">Add new expense</button>
     </form>
     <Table data={data} theme={theme}>
