@@ -14,19 +14,19 @@
 
         I did a seperarate ReactTable component.
             It is structured in:
-                -imports
-                -list data
-                -functions for the calculations
-                -the main function with
+                - imports
+                - list data
+                - functions for the calculations
+                - the main function with
                     - adding state
                     - CRUD functionality
                     - effect Hook
                     - rendering with
-                        -form for new expense
-                        -header
-                        -cells with integrated handleUpdate
-                        -delete expense button
-                        -total sum
+                        - form for new expense
+                        - header
+                        - cells with integrated handleUpdate
+                        - delete expense button
+                        - total sum
         
         It gets "rendered" in App.jsx, which gets "rendered" in index.jsx.
 
