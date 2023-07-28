@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./ReactTable.css"
 import { useTheme } from "@table-library/react-table-library/theme";
 import { getTheme } from "@table-library/react-table-library/baseline";
 import BigNumber from "bignumber.js";
@@ -14,27 +13,44 @@ import {
     Cell
  } from "@table-library/react-table-library/table";
 
+
+ const formatValue = (value, type) => {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: type === "currency" ? "currency" : "percent",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+  });
+
+  return formatter.format(value);
+};
+
+
+
 const list = [
   {
     id: "1",
-    name: "Actor",
-    price: "1000",
-    percentage_markup: "15.00",
-    total_price: "1150.00",
+    name: "Actor 1",
+    price: 1000,
+    percentage_markup: 0.15,
+    total_price: 1150,
   },
   {
     id: "2",
     name: "Video",
-    price: "1000",
-    percentage_markup: "15.00",
-    total_price: "1150.00",
+    price: 1000,
+    percentage_markup: 0.15,
+    total_price: 1150,
   },
   {
     id: "3",
     name: "Director",
-    price: "1000",
-    percentage_markup: "15.00",
-    total_price: "1150.00",
+    price: 1000,
+    percentage_markup: 0.15,
+    total_price: 1150,
   }
 ];
 
@@ -62,13 +78,13 @@ const sumOfAll = (list) => {
 };
 
 
-const ReactTable = () => {
+const CurrencyTry = () => {
 
   const [data, setData] = React.useState({ nodes : list });
   const [value, setValue] = React.useState("");
   const [totalSum, setTotalSum] = React.useState("0.00");
 
-  const handleInput = (event) => {
+  const handleChange = (event) => {
     setValue(event.target.value);
   };
   
@@ -100,7 +116,6 @@ const ReactTable = () => {
     }));
   };
   //to remove
-
   
   const handleUpdate = (value, id, property) => {
     setData((state) => ({
@@ -108,18 +123,24 @@ const ReactTable = () => {
       nodes: state.nodes.map((node) => {
         if (node.id === id) {
           if (property === "price" || property === "percentage_markup") {
+            const parsedValue = parseFloat(value);
+  
+            if (isNaN(parsedValue)) {
+              return node;
+            }
+  
             const totalPrice = calculateTotalPrice(
-              property === "price" ? value : node.price,
-              property === "percentage_markup" ? value : node.percentage_markup
+              property === "price" ? parsedValue : node.price,
+              property === "percentage_markup" ? parsedValue : node.percentage_markup
             );
-            
+  
             return {
               ...node,
-              [property]: value,
+              [property]: parsedValue,
               total_price: totalPrice,
             };
           }
-          
+  
           return { ...node, [property]: value };
         } else {
           return node;
@@ -133,17 +154,16 @@ const ReactTable = () => {
     const newTotalSum = sumOfAll(data.nodes);
     setTotalSum(newTotalSum);
   }, [data.nodes]);
-  //calculates the total sum whenever the list data changes
+  // Calculates the total sum whenever the list data changes
   
   const theme = useTheme(getTheme());
 
   return (
     <>
-    <form className="addexpense" onSubmit={handleSubmit}>
-      <input type="text" value={value} onChange={handleInput} />
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={value} onChange={handleChange} />
       <button type="submit">Add new expense</button>
     </form>
-    {/* form to submit new input */}
     <Table data={data} theme={theme}>
       {(tableList) => (
         <>
@@ -156,6 +176,7 @@ const ReactTable = () => {
             <HeaderCell>Action</HeaderCell>
           </HeaderRow>
         </Header>
+
           <Body>
             {tableList.map((item) => (
               <Row key={item.id} item={item}>
@@ -173,71 +194,37 @@ const ReactTable = () => {
                   <input
                     style={{ width: "100%" }}
                     type="text"
-                    value={item.price}
+                    value={formatValue(item.price, "currency")}
                     onChange={(event) =>
                       handleUpdate(event.target.value, item.id, "price")
                     }
                   />
                 </Cell>
-
-                {/* commented out you see the version with currency/percentage
-                this is an ungly hardcode approach though
-                and one has to put the curser before the sign to change the value*/}
-                
-                {/* <Cell>
-                  <input
-                    style={{ width: "100%" }}
-                    type="text"
-                    value={item.price}
-                    onChange={(event) => {
-                      newPrice = event.target.value.replace("€", "")
-                      handleUpdate(newPrice, item.id, "price")
-                    }
-                    }
-                  />
-                </Cell> */}
-
                 <Cell>
                   <input
                     style={{ width: "100%" }}
                     type="text"
-                    value={item.percentage_markup}
+                    value={formatValue(item.percentage_markup, "percent")}
                     onChange={(event) =>
                       handleUpdate(event.target.value, item.id, "percentage_markup")
                     }
                   />
                 </Cell>
-
-                {/* same here */}
-
-                {/* <Cell>
-                <input
-                    style={{ width: "100%" }}
-                    type="text"
-                    value={item.percentage_markup + "%"}
-                    onChange={(event) => {
-                      const newPercent = event.target.value.replace("%", "")
-                      handleUpdate(newPercent, item.id, "percentage_markup")
-                    }
-                    }
-                  />
-                </Cell> */}
-
-                <Cell>{item.total_price + " €"}</Cell>
+                <Cell>{formatValue(item.total_price, "currency")}</Cell>
                 <Cell>
-                  <button className="deletebutton" type="button" onClick={() => handleRemove(item.id)}>
+                  <button type="button" onClick={() => handleRemove(item.id)}>
                     Delete
                   </button>
                 </Cell>
               </Row>
             ))}
+            <div>Total Sum: {formatValue(totalSum, "currency")}</div>
           </Body>
         </>
       )}
     </Table>
-    <div className="totalsum">Total: {totalSum + " €"}</div>
     </>
   );
 };
 
-export default ReactTable;
+export default CurrencyTry;
