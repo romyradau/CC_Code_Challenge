@@ -81,8 +81,8 @@
             https://www.youtube.com/watch?v=j6-ImdZW7aM&ab_channel=Joshtriedcoding
             https://www.youtube.com/watch?v=A9oUTEP-Q84&ab_channel=PedroTech
             https://www.youtube.com/watch?v=2aIjW_w_-Rg&ab_channel=CodeWithYousaf
-        -Still I didn't get the results I wanted and also there were so many different approaches with more and more difficult syntax, probably way to overengineered table functionality for what I had to do.
-        -So I told myself "you need to understand the Code and not just code along"
+        -Still, I didn't get the results I wanted and also there were so many different approaches with more and more difficult syntax, probably way to overengineered table functionality for what I had to do.
+        -So I told myself "You need to understand the Code and not just code along"
         -So I did the How to create a React Component Tutorial
             https://www.robinwieruch.de/react-table-component/
         
@@ -90,7 +90,7 @@
         -How do I add functionality to a basic display table?
         -How do I combine it with the BigNumber library?
         -How do I get the data?
-        -The PedroTech guy confused me with his approach and he also used a json file for the Data
+        -The PedroTech guy confused me with his approach and he also used a JSON file for the Data
         -Another guy just used random data from the internet using an URL...
         -So my most important question was: How the f*** do I get the data!?!?! Was a big AHA effect later haha^^
         -This page introduced me to editable tables and the CRUD functionality
@@ -110,16 +110,16 @@
         -start documenting what I did all the time as by now I had +20 tabs and +5 VS Code repos open ^^
 
     6.5. Let the debugging begin
-        -everything was set up but nothing rendered, that was on wednesday afternoon
-        -time was short, so I reached out to a friend from 42 via slack if he could check the code
-        -the bug: I wanted to have a seperate component, but the tutorial put everything in App.jsx but called it component so their function was called App and so was mine but I simply needed to call mine ReactTable
+        -everything was set up but nothing was rendered, that was on Wednesday afternoon
+        -time was short, so I reached out to a friend from 42 via Slack if he could check the code
+        -the bug: I wanted to have a separate component, but the tutorial put everything in App.jsx but called it a component so their function was called App and so was mine but I simply needed to call mine ReactTable
         THAT WAS ALL - THAT WAS THE ERROR HAHA - SAD
         
     6.6. The fall of the dominos
-        -I had a visible table, which made my own code way more comprehandable to me especially how data input was handled
+        -I had a visible table, which made my own code way more comprehensible to me especially how data input was handled
         -I added a simple theme to make it look better
             https://react-table-library.com/?path=/docs/theming-themes--page
-        -I started with creating, deleting then updating data
+        -I started with creating, deleting then updating the data
         -I adjusted some things so that a new expense wouldn't be filled in already and that the input got emptied after submitting
         -I did the calculations (with chatgpt): first for each expense, then for the total sum which needed a new field
 
@@ -129,14 +129,14 @@
         -currency and percentage signs
         -better design
         -make it responsive and mobile friendly
-        -well structured README
+        -well-structured README
 
     6.8. Currency and percentage signs fail
         - tried 5 different approaches with chatGPT
         - introducing a formatValue function
         - updating handlerfunctions and display values
         - I checked the bigNumber library again to see if they had something like a formatter
-        - I even imported a formatter library but nothing really worked
+        - I even imported a formatting library but nothing really worked
             https://formatjs.io/docs/polyfills/intl-numberformat/
         - I had currency and percentage signs everywhere but the functionality was gone
         - updating and converting all values to either strings or floats didn't help
