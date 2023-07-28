@@ -46,16 +46,18 @@
 
   5. Why did you design the user interface like you did? What choices did you make and why?
 
-    Tbh I was super happy when the implementation of the baseline theme for the table just worked (link below in 6.6.)
-    I did some minor adjustments, but didn't have the time and mindspace anymore to come up with something cool
-    In an utopian universe I would have though styled it as so:
+    Tbh I was super happy when the implementation of the baseline theme for the table just worked. (link below in 6.6.)
+    I did some minor adjustments, but didn't have the time and mindspace anymore to come up with something cool.
+    Putting the addButton and totalSum in the middle didn't look appealing to me so I left it on the left side.
 
+    In an utopian universe I would have though styled it in a dark mode, slightly transparent input fields with a blue/purple touch, text-color close to white, trashbin signs in the color of the input fields, expenseAddButton non-transparent and the same blue/purple with and add icon in it, onClick redirects to the newly created first cell of the row.
+    (for the layout see assets)
 
 
   6. What „tasks“ did you have on your mind? How did you break down the different deliverables?
 
-    Ok, so this could become a whole blog article, so I will try to just list up what I did ^^
-    I do hope you enjoy eleborate documentations ^^
+    Ok, so this could become a whole blog article, so I will try to just list up what I did. ^^
+    I do hope you enjoy eleborate documentations. ^^
     
     6.0. Rough structuring of the overall requirements
         -list(editable markup fields, add functionality, sum calculation, total sum calculation)
@@ -146,5 +148,5 @@
 
     6.7. So I took a break and fully focused on a detailed README documentation
 
-    6.8. Clean Up, comments, 
+    6.8. Clean Up and comments
     
